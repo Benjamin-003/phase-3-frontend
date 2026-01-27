@@ -1,12 +1,14 @@
-import { Component, signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { DashboardComponent } from './pages/dashboard/dashboard';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.html',
+  standalone: true,
+  imports: [RouterOutlet, DashboardComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+ templateUrl: './app.html',
   styleUrl: './app.scss'
 })
-export class App {
-  protected readonly title = signal('frontend');
-}
+export class AppComponent {}
+

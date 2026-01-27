@@ -1,48 +1,92 @@
-/**
- * Interface pour les statistiques par département
- * Source: /api/analytics/department-costs
- */
-export interface DepartmentStat {
-  department: string;
-  total_cost: number;
-  tools_count: number;
-  total_users: number;
-  average_cost_per_tool: number;
-  cost_percentage: number;
-}
+// ============================================
+// 📊 TechCorp Dashboard - TypeScript Interfaces
+// ============================================
 
 /**
- * Résumé global de l'entreprise
+ * Tool status from JSON Server API
  */
-export interface AnalyticsSummary {
-  total_company_cost: number;
-  departments_count: number;
-  most_expensive_department: string;
-}
+export type ToolStatus = 'active' | 'unused' | 'expiring';
 
 /**
- * Réponse complète de l'endpoint Analytics
- */
-export interface AnalyticsResponse {
-  data: DepartmentStat[];
-  summary: AnalyticsSummary;
-}
-
-/**
- * Interface pour un outil SaaS
- * Source: /api/tools
+ * Tool interface matching JSON Server response
  */
 export interface Tool {
   id: number;
   name: string;
+  description: string;
   vendor: string;
-  owner_department: string;
+  category: string;
   monthly_cost: number;
-  status: 'active' | 'unused' | 'deprecated';
+  previous_month_cost: number;
+  owner_department: string;
+  status: ToolStatus;
+  website_url: string;
   active_users_count: number;
-  category_id: number;
-  categories?: {
-    id: number;
-    name: string;
+  icon_url: string;
+  created_at: string;
+  updated_at: string;
+}
+
+/**
+ * Analytics data from /analytics endpoint
+ */
+export interface Analytics {
+  budget_overview: {
+    monthly_limit: number;
+    current_month_total: number;
+    previous_month_total: number;
+    budget_utilization: string;
+    trend_percentage: string;
   };
+  kpi_trends: {
+    budget_change: string;
+    tools_change: string;
+    departments_change: string;
+    cost_per_user_change: string;
+  };
+  cost_analytics: {
+    cost_per_user: number;
+    previous_cost_per_user: number;
+    active_users: number;
+    total_users: number;
+  };
+}
+
+/**
+ * KPI Card configuration for dashboard
+ */
+export interface KpiCard {
+  label: string;
+  value: string;
+  subValue?: string;
+  trend: string;
+  trendPositive: boolean;
+  icon: string;
+  iconColor: string;
+  gradientFrom: string;
+  gradientTo: string;
+}
+
+/**
+ * Department interface
+ */
+export interface Department {
+  id: number;
+  name: string;
+  description: string;
+  created_at: string;
+  updated_at: string;
+}
+
+/**
+ * User interface
+ */
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+  department_id: number;
+  role: string;
+  active: boolean;
+  joined_at: string;
 }

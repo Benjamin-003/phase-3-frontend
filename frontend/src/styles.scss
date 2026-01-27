@@ -1,2 +1,71 @@
-/* You can add global styles to this file, and also import other style files */
-@import "tailwindcss" layer(base);
+@import "tailwindcss";
+
+/* ============================================
+   🎨 TechCorp Dashboard - Tailwind Configuration
+   ============================================ */
+
+@theme {
+  /* Custom Colors */
+  --color-dark-bg: #0a0a0a;
+  --color-dark-card: #141414;
+  --color-dark-border: rgba(255, 255, 255, 0.05);
+  
+  /* Font Family */
+  --font-inter: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  
+  /* Custom Animations */
+  --animate-fadeIn: fadeIn 0.3s ease-in-out;
+  --animate-slideUp: slideUp 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Selection Color */
+::selection {
+  background-color: rgba(99, 102, 241, 0.3);
+  color: white;
+}
+
+/* Base Styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-inter);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
