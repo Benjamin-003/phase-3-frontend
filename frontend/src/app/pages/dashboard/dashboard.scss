@@ -1,0 +1,15 @@
+.stat-card {
+    @apply bg-white p-6 rounded-3xl border border-slate-200 shadow-sm transition-all;
+    
+    &:hover {
+        @apply shadow-md border-indigo-100;
+    }
+
+    .label {
+        @apply text-slate-500 text-sm font-bold uppercase tracking-wider;
+    }
+
+    .value {
+        @apply text-3xl font-black text-slate-900 mt-2;
+    }
+}

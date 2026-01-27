@@ -1,0 +1,55 @@
+<div class="space-y-8 p-6">
+  <!-- Section Stats -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="stat-card">
+      <p class="label">Budget Total</p>
+      <h3 class="value">{{ summary()?.total_company_cost }} €</h3>
+    </div>
+    
+    <div class="stat-card">
+      <p class="label">Outils Actifs</p>
+      <h3 class="value">{{ tools().length }}</h3>
+    </div>
+
+    <div class="stat-card">
+      <p class="label">Top Département</p>
+      <h3 class="value text-indigo-600">{{ summary()?.most_expensive_department }}</h3>
+    </div>
+  </div>
+
+  <!-- Liste des outils -->
+  <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
+    <div class="p-6 border-b border-slate-100 flex justify-between items-center">
+      <h3 class="font-bold text-lg text-slate-800">Logiciels Détectés</h3>
+      <span class="px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-xs font-bold">
+        {{ tools().length }} outils
+      </span>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-left">
+        <thead class="bg-slate-50 text-slate-400 text-[10px] uppercase font-black">
+          <tr>
+            <th class="px-6 py-4">Nom</th>
+            <th class="px-6 py-4">Propriétaire</th>
+            <th class="px-6 py-4">Coût Mensuel</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100">
+          @for (tool of tools(); track tool.id) {
+            <tr class="hover:bg-slate-50/50 transition-colors">
+              <td class="px-6 py-4 font-bold text-slate-700">{{ tool.name }}</td>
+              <td class="px-6 py-4 text-slate-500">{{ tool.owner_department }}</td>
+              <td class="px-6 py-4 font-black text-slate-900">{{ tool.monthly_cost }}€</td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="3" class="px-6 py-10 text-center text-slate-400 italic">
+                Aucune donnée disponible pour le moment.
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

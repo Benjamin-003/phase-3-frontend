@@ -1,0 +1,44 @@
+<aside class="flex flex-col w-64 h-screen px-5 py-8 overflow-y-auto bg-white border-r border-gray-200 sticky top-0">
+  <!-- Logo TechCorp -->
+  <div class="flex items-center gap-3 px-2">
+    <div class="flex items-center justify-center w-10 h-10 rounded-xl bg-indigo-600 text-white font-bold text-xl shadow-lg shadow-indigo-200">
+      TC
+    </div>
+    <span class="text-xl font-bold text-gray-800 tracking-tight">TechCorp</span>
+  </div>
+
+  <!-- Navigation -->
+  <div class="flex flex-col justify-between flex-1 mt-10">
+    <nav class="flex-1 -mx-2 space-y-2">
+      @for (item of menuItems(); track item.id) {
+        <a 
+          href="#" 
+          (click)="setActive(item.id, $event)"
+          class="flex items-center px-4 py-3 transition-colors duration-300 transform rounded-xl group"
+          [class.bg-indigo-50]="activeId() === item.id"
+          [class.text-indigo-700]="activeId() === item.id"
+          [class.text-gray-600]="activeId() !== item.id"
+          [class.hover:bg-gray-50]="activeId() !== item.id"
+        >
+          <span class="w-5 h-5 flex items-center justify-center" [class.text-indigo-600]="activeId() === item.id">
+            <i [class]="item.icon"></i>
+          </span>
+          <span class="mx-4 font-medium">{{ item.label }}</span>
+        </a>
+      }
+    </nav>
+
+    <!-- Bas de Sidebar : Profil -->
+    <div class="mt-6 border-t border-gray-100 pt-6">
+      <a href="#" class="flex items-center gap-x-3 p-2 rounded-xl hover:bg-gray-50 transition-colors">
+        <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 font-bold border border-white shadow-sm">
+          JD
+        </div>
+        <div class="text-left">
+          <p class="text-sm font-semibold text-gray-700">John Doe</p>
+          <p class="text-xs text-gray-500">Admin IT</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</aside>
