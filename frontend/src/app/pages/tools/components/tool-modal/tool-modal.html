@@ -1,0 +1,233 @@
+ @if (isOpen()) {
+      <!-- Modal Overlay -->
+      <div 
+        class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+        (click)="closeModal()"
+      >
+        <!-- Modal Content -->
+        <div 
+          class="bg-white dark:bg-[#1a1a1a] rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden"
+          (click)="$event.stopPropagation()"
+        >
+          <!-- Modal Header -->
+          <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
+              {{ editingTool() ? 'Edit Tool' : 'Add New Tool' }}
+            </h2>
+            <button 
+              (click)="closeModal()"
+              class="w-8 h-8 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-center transition-colors"
+            >
+              <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Modal Body -->
+          <div class="px-6 py-6 overflow-y-auto max-h-[calc(90vh-140px)]">
+            <form class="space-y-5">
+              
+              <!-- Tool Name -->
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Tool Name <span class="text-red-500">*</span>
+                </label>
+                <input 
+                  type="text"
+                  [(ngModel)]="formData().name"
+                  name="name"
+                  placeholder="e.g., Slack, Figma, GitHub"
+                  class="w-full px-4 py-2.5 bg-gray-50 dark:bg-[#0a0a0a] border border-gray-200 dark:border-gray-800 
+                         rounded-xl text-gray-900 dark:text-white
+                         focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500/50 transition-all"
+                  required
+                />
+              </div>
+
+              <!-- Description -->
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Description
+                </label>
+                <textarea 
+                  [(ngModel)]="formData().description"
+                  name="description"
+                  rows="3"
+                  placeholder="Brief description of the tool"
+                  class="w-full px-4 py-2.5 bg-gray-50 dark:bg-[#0a0a0a] border border-gray-200 dark:border-gray-800 
+                         rounded-xl text-gray-900 dark:text-white resize-none
+                         focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500/50 transition-all"
+                ></textarea>
+              </div>
+
+              <!-- Category & Department (2 columns) -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Category -->
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Category <span class="text-red-500">*</span>
+                  </label>
+                  <select 
+                    [(ngModel)]="formData().category"
+                    name="category"
+                    class="w-full px-4 py-2.5 bg-gray-50 dark:bg-[#0a0a0a] border border-gray-200 dark:border-gray-800 
+                           rounded-xl text-gray-900 dark:text-white
+                           focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500/50 transition-all"
+                    required
+                  >
+                    <option value="">Select category</option>
+                    <option value="Communication">Communication</option>
+                    <option value="Development">Development</option>
+                    <option value="Design">Design</option>
+                    <option value="Project Management">Project Management</option>
+                    <option value="Analytics">Analytics</option>
+                    <option value="Marketing">Marketing</option>
+                  </select>
+                </div>
+
+                <!-- Department -->
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Department <span class="text-red-500">*</span>
+                  </label>
+                  <select 
+                    [(ngModel)]="formData().owner_department"
+                    name="owner_department"
+                    class="w-full px-4 py-2.5 bg-gray-50 dark:bg-[#0a0a0a] border border-gray-200 dark:border-gray-800 
+                           rounded-xl text-gray-900 dark:text-white
+                           focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500/50 transition-all"
+                    required
+                  >
+                    <option value="">Select department</option>
+                    <option value="Engineering">Engineering</option>
+                    <option value="Design">Design</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="Sales">Sales</option>
+                    <option value="Operations">Operations</option>
+                    <option value="Communication">Communication</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Monthly Cost & Users (2 columns) -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Monthly Cost -->
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Monthly Cost (€) <span class="text-red-500">*</span>
+                  </label>
+                  <input 
+                    type="number"
+                    [(ngModel)]="formData().monthly_cost"
+                    name="monthly_cost"
+                    placeholder="0"
+                    min="0"
+                    class="w-full px-4 py-2.5 bg-gray-50 dark:bg-[#0a0a0a] border border-gray-200 dark:border-gray-800 
+                           rounded-xl text-gray-900 dark:text-white
+                           focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500/50 transition-all"
+                    required
+                  />
+                </div>
+
+                <!-- Active Users -->
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Active Users
+                  </label>
+                  <input 
+                    type="number"
+                    [(ngModel)]="formData().active_users_count"
+                    name="active_users_count"
+                    placeholder="0"
+                    min="0"
+                    class="w-full px-4 py-2.5 bg-gray-50 dark:bg-[#0a0a0a] border border-gray-200 dark:border-gray-800 
+                           rounded-xl text-gray-900 dark:text-white
+                           focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500/50 transition-all"
+                  />
+                </div>
+              </div>
+
+              <!-- Status -->
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Status <span class="text-red-500">*</span>
+                </label>
+                <div class="flex gap-4">
+                  <label class="flex items-center gap-2 cursor-pointer">
+                    <input 
+                      type="radio" 
+                      [(ngModel)]="formData().status"
+                      name="status"
+                      value="active"
+                      class="w-4 h-4 text-indigo-600 focus:ring-indigo-500"
+                    />
+                    <span class="text-sm text-gray-700 dark:text-gray-300">Active</span>
+                  </label>
+                  <label class="flex items-center gap-2 cursor-pointer">
+                    <input 
+                      type="radio" 
+                      [(ngModel)]="formData().status"
+                      name="status"
+                      value="expiring"
+                      class="w-4 h-4 text-indigo-600 focus:ring-indigo-500"
+                    />
+                    <span class="text-sm text-gray-700 dark:text-gray-300">Expiring</span>
+                  </label>
+                  <label class="flex items-center gap-2 cursor-pointer">
+                    <input 
+                      type="radio" 
+                      [(ngModel)]="formData().status"
+                      name="status"
+                      value="unused"
+                      class="w-4 h-4 text-indigo-600 focus:ring-indigo-500"
+                    />
+                    <span class="text-sm text-gray-700 dark:text-gray-300">Unused</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Icon URL (optional) -->
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Icon URL (optional)
+                </label>
+                <input 
+                  type="url"
+                  [(ngModel)]="formData().icon_url"
+                  name="icon_url"
+                  placeholder="https://example.com/icon.png"
+                  class="w-full px-4 py-2.5 bg-gray-50 dark:bg-[#0a0a0a] border border-gray-200 dark:border-gray-800 
+                         rounded-xl text-gray-900 dark:text-white
+                         focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500/50 transition-all"
+                />
+              </div>
+
+            </form>
+          </div>
+
+          <!-- Modal Footer -->
+          <div class="px-6 py-4 border-t border-gray-200 dark:border-gray-800 flex items-center justify-end gap-3">
+            <button 
+              (click)="closeModal()"
+              class="px-6 py-2.5 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700
+                     text-gray-700 dark:text-gray-300 rounded-xl font-medium transition-colors"
+            >
+              Cancel
+            </button>
+            <button 
+              (click)="submitForm()"
+              [disabled]="!isFormValid()"
+              class="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-300 dark:disabled:bg-gray-700
+                     text-white rounded-xl font-medium transition-colors disabled:cursor-not-allowed
+                     flex items-center gap-2"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+              {{ editingTool() ? 'Update Tool' : 'Add Tool' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    }

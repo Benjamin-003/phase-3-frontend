@@ -92,4 +92,60 @@ export class ApiService {
       return of(result as T);
     };
   }
+
+  getAllTools(): Observable<Tool[]> {
+  this.isLoading.set(true);
+  return this.http.get<Tool[]>(`${this.API_URL }/tools`).pipe(
+    tap(() => {
+      this.isLoading.set(false);
+      this.error.set(null);
+    }),
+    catchError(this.handleError<Tool[]>('getAllTools', []))
+  );
+}
+
+/**
+ * POST /tools
+ * Create new tool
+ */
+createTool(tool: Partial<Tool>): Observable<Tool> {
+  this.isLoading.set(true);
+  return this.http.post<Tool>(`${this.API_URL}/tools`, tool).pipe(
+    tap(() => {
+      this.isLoading.set(false);
+      this.error.set(null);
+    }),
+    catchError(this.handleError<Tool>('createTool'))
+  );
+}
+
+/**
+ * PUT /tools/{id}
+ * Update tool
+ */
+updateTool(id: number, tool: Partial<Tool>): Observable<Tool> {
+  this.isLoading.set(true);
+  return this.http.put<Tool>(`${this.API_URL}/tools/${id}`, tool).pipe(
+    tap(() => {
+      this.isLoading.set(false);
+      this.error.set(null);
+    }),
+    catchError(this.handleError<Tool>('updateTool'))
+  );
+}
+
+/**
+ * DELETE /tools/{id}
+ * Delete tool
+ */
+deleteTool(id: number): Observable<void> {
+  this.isLoading.set(true);
+  return this.http.delete<void>(`${this.API_URL}/tools/${id}`).pipe(
+    tap(() => {
+      this.isLoading.set(false);
+      this.error.set(null);
+    }),
+    catchError(this.handleError<void>('deleteTool'))
+  );
+}
 }

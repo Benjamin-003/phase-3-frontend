@@ -1,4 +1,4 @@
-import { Component, computed, input, signal } from '@angular/core';
+import { Component, computed, input, signal, output } from '@angular/core';
 import { Tool } from '../../../core/models/interfaces';
 
 @Component({
@@ -9,6 +9,10 @@ import { Tool } from '../../../core/models/interfaces';
 })
 export class ToolsTableComponent {
   tools = input.required<Tool[]>();
+  
+  // Outputs for actions
+  editTool = output<Tool>();
+  deleteTool = output<number>();
   
   currentPage = signal(1);
   itemsPerPage = signal(10);
@@ -65,6 +69,20 @@ export class ToolsTableComponent {
     if (this.currentPage() > 1) {
       this.currentPage.update(p => p - 1);
     }
+  }
+
+  /**
+   * Emit edit event
+   */
+  onEdit(tool: Tool): void {
+    this.editTool.emit(tool);
+  }
+
+  /**
+   * Emit delete event
+   */
+  onDelete(toolId: number): void {
+    this.deleteTool.emit(toolId);
   }
 
   /**

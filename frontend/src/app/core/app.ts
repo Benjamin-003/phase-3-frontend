@@ -5,10 +5,13 @@ import { DashboardComponent } from '../pages/dashboard/dashboard';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [DashboardComponent],
+  imports: [RouterOutlet],
   changeDetection: ChangeDetectionStrategy.OnPush,
  templateUrl: './app.html',
   styleUrl: './app.scss'
 })
-export class AppComponent {}
+export class AppComponent {
+  title = 'TechCorp Dashboard';
+
+}
 

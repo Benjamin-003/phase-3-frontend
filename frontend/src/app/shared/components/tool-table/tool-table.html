@@ -1,152 +1,183 @@
 <section class="bg-white dark:bg-[#1a1a1a] rounded-2xl overflow-hidden shadow-sm border border-gray-100 dark:border-gray-800">
       
-      <!-- Table Header -->
-      <div class="px-6 py-5 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between">
-        <h2 class="text-xl font-bold text-gray-900 dark:text-white">Recent Tools</h2>
-        <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-500">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-          </svg>
-          Last 30 days
-        </div>
-      </div>
+  <!-- Table Header -->
+  <div class="px-6 py-5 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between">
+    <h2 class="text-xl font-bold text-gray-900 dark:text-white">Recent Tools</h2>
+    <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-500">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+      </svg>
+      Last 30 days
+    </div>
+  </div>
 
-      <!-- Table -->
-      <div class="overflow-x-auto">
-        <table class="w-full">
-          <thead>
-            <tr class="border-b border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-[#151515]">
-              <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-500 uppercase tracking-wider cursor-pointer hover:text-gray-900 dark:hover:text-gray-300" (click)="sortBy('name')">
-                Tool
-                @if (sortColumn() === 'name') {
-                  <span class="text-indigo-500 ml-1">{{ sortDirection() === 'asc' ? '↑' : '↓' }}</span>
-                }
-              </th>
-              <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-500 uppercase tracking-wider cursor-pointer hover:text-gray-900 dark:hover:text-gray-300" (click)="sortBy('owner_department')">
-                Department
-                @if (sortColumn() === 'owner_department') {
-                  <span class="text-indigo-500 ml-1">{{ sortDirection() === 'asc' ? '↑' : '↓' }}</span>
-                }
-              </th>
-              <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-500 uppercase tracking-wider cursor-pointer hover:text-gray-900 dark:hover:text-gray-300" (click)="sortBy('active_users_count')">
-                Users
-                @if (sortColumn() === 'active_users_count') {
-                  <span class="text-indigo-500 ml-1">{{ sortDirection() === 'asc' ? '↑' : '↓' }}</span>
-                }
-              </th>
-              <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-500 uppercase tracking-wider cursor-pointer hover:text-gray-900 dark:hover:text-gray-300" (click)="sortBy('monthly_cost')">
-                Monthly Cost
-                @if (sortColumn() === 'monthly_cost') {
-                  <span class="text-indigo-500 ml-1">{{ sortDirection() === 'asc' ? '↑' : '↓' }}</span>
-                }
-              </th>
-              <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-500 uppercase tracking-wider">
-                Status
-              </th>
-            </tr>
-          </thead>
-          
-          <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
-            @for (tool of paginatedTools(); track tool.id) {
-              <tr class="hover:bg-gray-50 dark:hover:bg-[#151515] transition-colors">
-                <!-- Tool avec VRAIE IMAGE -->
-                <td class="px-6 py-4">
-                  <div class="flex items-center gap-3">
-                    <!-- Image du tool depuis API ou fallback Clearbit -->
-                    <img 
-                      [src]="getToolImageUrl(tool)"
-                      [alt]="tool.name"
-                      class="w-7 h-7 rounded-lg object-contain flex-shrink-0"
-                      (error)="handleImageError($event)"
-                    />
-                    <span class="font-medium text-gray-900 dark:text-white">
-                      {{ tool.name }}
-                    </span>
-                  </div>
-                </td>
-
-                <!-- Department -->
-                <td class="px-6 py-4 text-gray-600 dark:text-gray-400">
-                  {{ tool.owner_department }}
-                </td>
-
-                <!-- Users -->
-                <td class="px-6 py-4 text-gray-900 dark:text-white">
-                  {{ tool.active_users_count }}
-                </td>
-
-                <!-- Monthly Cost -->
-                <td class="px-6 py-4 text-gray-900 dark:text-white font-medium">
-                  €{{ tool.monthly_cost.toLocaleString() }}
-                </td>
-
-                <!-- Status Badge COMME MOCKUP -->
-                <td class="px-6 py-4">
-                  <span 
-                    [class]="getStatusClass(tool.status)" 
-                    class="px-3 py-1 rounded-full text-xs font-bold capitalize"
-                  >
-                    {{ tool.status }}
-                  </span>
-                </td>
-              </tr>
-            } @empty {
-              <tr>
-                <td colspan="5" class="px-6 py-12 text-center">
-                  <div class="flex flex-col items-center gap-3">
-                    <svg class="w-12 h-12 text-gray-300 dark:text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
-                    </svg>
-                    <p class="text-gray-500 dark:text-gray-500 text-lg font-medium">No tools found</p>
-                  </div>
-                </td>
-              </tr>
+  <!-- Table -->
+  <div class="overflow-x-auto">
+    <table class="w-full">
+      <thead>
+        <tr class="border-b border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-[#151515]">
+          <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-500 uppercase tracking-wider cursor-pointer hover:text-gray-900 dark:hover:text-gray-300" (click)="sortBy('name')">
+            Tool
+            @if (sortColumn() === 'name') {
+              <span class="text-indigo-500 ml-1">{{ sortDirection() === 'asc' ? '↑' : '↓' }}</span>
             }
-          </tbody>
-        </table>
-      </div>
+          </th>
+          <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-500 uppercase tracking-wider cursor-pointer hover:text-gray-900 dark:hover:text-gray-300" (click)="sortBy('owner_department')">
+            Department
+            @if (sortColumn() === 'owner_department') {
+              <span class="text-indigo-500 ml-1">{{ sortDirection() === 'asc' ? '↑' : '↓' }}</span>
+            }
+          </th>
+          <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-500 uppercase tracking-wider cursor-pointer hover:text-gray-900 dark:hover:text-gray-300" (click)="sortBy('active_users_count')">
+            Users
+            @if (sortColumn() === 'active_users_count') {
+              <span class="text-indigo-500 ml-1">{{ sortDirection() === 'asc' ? '↑' : '↓' }}</span>
+            }
+          </th>
+          <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-500 uppercase tracking-wider cursor-pointer hover:text-gray-900 dark:hover:text-gray-300" (click)="sortBy('monthly_cost')">
+            Monthly Cost
+            @if (sortColumn() === 'monthly_cost') {
+              <span class="text-indigo-500 ml-1">{{ sortDirection() === 'asc' ? '↑' : '↓' }}</span>
+            }
+          </th>
+          <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-500 uppercase tracking-wider">
+            Status
+          </th>
+          <!-- NEW: Actions column -->
+          <th class="px-6 py-4 text-right text-xs font-semibold text-gray-600 dark:text-gray-500 uppercase tracking-wider">
+            Actions
+          </th>
+        </tr>
+      </thead>
+      
+      <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+        @for (tool of paginatedTools(); track tool.id) {
+          <tr class="hover:bg-gray-50 dark:hover:bg-[#151515] transition-colors">
+            <!-- Tool avec VRAIE IMAGE -->
+            <td class="px-6 py-4">
+              <div class="flex items-center gap-3">
+                <!-- Image du tool depuis API ou fallback Clearbit -->
+                <img 
+                  [src]="getToolImageUrl(tool)"
+                  [alt]="tool.name"
+                  class="w-7 h-7 rounded-lg object-contain flex-shrink-0"
+                  (error)="handleImageError($event)"
+                />
+                <span class="font-medium text-gray-900 dark:text-white">
+                  {{ tool.name }}
+                </span>
+              </div>
+            </td>
 
-      <!-- Pagination (si besoin) -->
-      @if (totalPages() > 1) {
-        <div class="px-6 py-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between bg-gray-50 dark:bg-[#151515]">
-          <p class="text-sm text-gray-600 dark:text-gray-500">
-            Showing {{ startIndex() + 1 }} to {{ endIndex() }} of {{ tools().length }} tools
-          </p>
-          
-          <div class="flex items-center gap-2">
-            <button 
-              (click)="previousPage()"
-              [disabled]="currentPage() === 1"
-              class="px-4 py-2 bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#252525] 
-                     disabled:opacity-30 disabled:cursor-not-allowed text-gray-700 dark:text-gray-300 text-sm font-medium rounded-lg transition-colors"
-            >
-              Previous
-            </button>
-            
-            @for (page of pageNumbers(); track page) {
-              <button 
-                (click)="goToPage(page)"
-                [class.bg-indigo-600]="currentPage() === page"
-                [class.text-white]="currentPage() === page"
-                [class.bg-white]="currentPage() !== page"
-                [class.dark:bg-[#1a1a1a]]="currentPage() !== page"
-                [class.text-gray-700]="currentPage() !== page"
-                [class.dark:text-gray-300]="currentPage() !== page"
-                class="w-10 h-10 rounded-lg font-medium text-sm border border-gray-200 dark:border-gray-700 transition-colors"
+            <!-- Department -->
+            <td class="px-6 py-4 text-gray-600 dark:text-gray-400">
+              {{ tool.owner_department }}
+            </td>
+
+            <!-- Users -->
+            <td class="px-6 py-4 text-gray-900 dark:text-white">
+              {{ tool.active_users_count }}
+            </td>
+
+            <!-- Monthly Cost -->
+            <td class="px-6 py-4 text-gray-900 dark:text-white font-medium">
+              €{{ tool.monthly_cost.toLocaleString() }}
+            </td>
+
+            <!-- Status Badge COMME MOCKUP -->
+            <td class="px-6 py-4">
+              <span 
+                [class]="getStatusClass(tool.status)" 
+                class="px-3 py-1 rounded-full text-xs font-bold capitalize"
               >
-                {{ page }}
-              </button>
-            }
-            
-            <button 
-              (click)="nextPage()"
-              [disabled]="currentPage() === totalPages()"
-              class="px-4 py-2 bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#252525] 
-                     disabled:opacity-30 disabled:cursor-not-allowed text-gray-700 dark:text-gray-300 text-sm font-medium rounded-lg transition-colors"
-            >
-              Next
-            </button>
-          </div>
-        </div>
-      }
-    </section>
+                {{ tool.status }}
+              </span>
+            </td>
+
+            <!-- NEW: Actions buttons -->
+            <td class="px-6 py-4">
+              <div class="flex items-center justify-end gap-2">
+                <!-- Edit Button -->
+                <button 
+                  (click)="onEdit(tool)"
+                  class="p-2 hover:bg-indigo-100 dark:hover:bg-indigo-500/20 rounded-lg transition-colors group"
+                  title="Edit tool"
+                >
+                  <svg class="w-4 h-4 text-gray-500 dark:text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                  </svg>
+                </button>
+
+                <!-- Delete Button -->
+                <button 
+                  (click)="onDelete(tool.id)"
+                  class="p-2 hover:bg-red-100 dark:hover:bg-red-500/20 rounded-lg transition-colors group"
+                  title="Delete tool"
+                >
+                  <svg class="w-4 h-4 text-gray-500 dark:text-gray-400 group-hover:text-red-600 dark:group-hover:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                  </svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="6" class="px-6 py-12 text-center">
+              <div class="flex flex-col items-center gap-3">
+                <svg class="w-12 h-12 text-gray-300 dark:text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
+                </svg>
+                <p class="text-gray-500 dark:text-gray-500 text-lg font-medium">No tools found</p>
+              </div>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination (si besoin) -->
+  @if (totalPages() > 1) {
+    <div class="px-6 py-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between bg-gray-50 dark:bg-[#151515]">
+      <p class="text-sm text-gray-600 dark:text-gray-500">
+        Showing {{ startIndex() + 1 }} to {{ endIndex() }} of {{ tools().length }} tools
+      </p>
+      
+      <div class="flex items-center gap-2">
+        <button 
+          (click)="previousPage()"
+          [disabled]="currentPage() === 1"
+          class="px-4 py-2 bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#252525] 
+                 disabled:opacity-30 disabled:cursor-not-allowed text-gray-700 dark:text-gray-300 text-sm font-medium rounded-lg transition-colors"
+        >
+          Previous
+        </button>
+        
+        @for (page of pageNumbers(); track page) {
+          <button 
+            (click)="goToPage(page)"
+            [class.bg-indigo-600]="currentPage() === page"
+            [class.text-white]="currentPage() === page"
+            [class.bg-white]="currentPage() !== page"
+            [class.dark:bg-[#1a1a1a]]="currentPage() !== page"
+            [class.text-gray-700]="currentPage() !== page"
+            [class.dark:text-gray-300]="currentPage() !== page"
+            class="w-10 h-10 rounded-lg font-medium text-sm border border-gray-200 dark:border-gray-700 transition-colors"
+          >
+            {{ page }}
+          </button>
+        }
+        
+        <button 
+          (click)="nextPage()"
+          [disabled]="currentPage() === totalPages()"
+          class="px-4 py-2 bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#252525] 
+                 disabled:opacity-30 disabled:cursor-not-allowed text-gray-700 dark:text-gray-300 text-sm font-medium rounded-lg transition-colors"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  }
+</section>
