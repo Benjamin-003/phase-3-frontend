@@ -1,23 +1,24 @@
-<div class="min-h-screen bg-[#0a0a0a] text-gray-200 font-inter">
+<!-- Background selon mockup -->
+    <div class="min-h-screen bg-gray-50 dark:bg-[#0a0a0a] transition-colors duration-300">
       
-      <!-- Header with Navigation -->
+      <!-- Header -->
       <app-header (search)="onSearch($event)" />
 
       <!-- Main Content -->
-      <main class="max-w-[1600px] mx-auto px-8 py-10">
+      <main class="max-w-7xl mx-auto px-6 md:px-8 py-8">
         
-        <!-- Page Title -->
-        <header class="mb-12">
-          <h1 class="text-5xl font-black text-white mb-3 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
+        <!-- Page Title - Subtitle en INDIGO comme mockup -->
+        <header class="mb-10">
+          <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-2">
             Internal Tools Dashboard
           </h1>
-          <p class="text-lg text-gray-400 font-medium">
+          <p class="text-base text-indigo-600 dark:text-indigo-400 font-medium">
             Monitor and manage your organization's software tools and expenses
           </p>
         </header>
 
-        <!-- KPI Cards Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <!-- KPI Cards Grid - Plus d'espacement comme mockup -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
           @for (kpi of kpiCards(); track kpi.label) {
             <app-kpi-card
               [label]="kpi.label"
@@ -35,15 +36,15 @@
 
         <!-- Recent Tools Table -->
         @if (isLoading()) {
-          <div class="bg-[#141414] rounded-3xl p-20 flex items-center justify-center border border-white/5">
+          <div class="bg-white dark:bg-[#1a1a1a] rounded-2xl p-20 flex items-center justify-center shadow-sm">
             <div class="text-center">
               <div class="inline-block w-16 h-16 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-              <p class="text-gray-400 text-lg font-medium">Loading tools...</p>
+              <p class="text-gray-600 dark:text-gray-400 text-lg font-medium">Loading tools...</p>
             </div>
           </div>
         } @else if (error()) {
-          <div class="bg-rose-500/10 border border-rose-500/20 rounded-3xl p-8 text-center">
-            <p class="text-rose-400 font-semibold">{{ error() }}</p>
+          <div class="bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/20 rounded-2xl p-8 text-center shadow-sm">
+            <p class="text-rose-600 dark:text-rose-400 font-semibold">{{ error() }}</p>
           </div>
         } @else {
           <app-tools-table [tools]="recentTools()" />

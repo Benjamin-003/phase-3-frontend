@@ -1,23 +1,12 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /* ============================================
-   🎨 TechCorp Dashboard - Tailwind Configuration
+   🎨 TechCorp Dashboard - Tailwind 3 + Dark Mode
    ============================================ */
 
-@theme {
-  /* Custom Colors */
-  --color-dark-bg: #0a0a0a;
-  --color-dark-card: #141414;
-  --color-dark-border: rgba(255, 255, 255, 0.05);
-  
-  /* Font Family */
-  --font-inter: 'Inter', ui-sans-serif, system-ui, sans-serif;
-  
-  /* Custom Animations */
-  --animate-fadeIn: fadeIn 0.3s ease-in-out;
-  --animate-slideUp: slideUp 0.4s ease-out;
-}
-
+/* Animations */
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -44,12 +33,23 @@
   background: transparent;
 }
 
-::-webkit-scrollbar-thumb {
+/* Light Mode Scrollbar */
+.light ::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.light ::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* Dark Mode Scrollbar */
+.dark ::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
 }
 
-::-webkit-scrollbar-thumb:hover {
+.dark ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.2);
 }
 
@@ -62,10 +62,34 @@
 /* Base Styles */
 html {
   scroll-behavior: smooth;
+  color-scheme: light dark;
 }
 
 body {
-  font-family: var(--font-inter);
+  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 0;
+}
+
+/* Light Mode Background */
+.light {
+  background: #f9fafb;
+  color: #111827;
+}
+
+/* Dark Mode Background */
+.dark {
+  background: #0a0a0a;
+  color: #f9fafb;
+}
+
+/* Smooth theme transition */
+*,
+*::before,
+*::after {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
 }
