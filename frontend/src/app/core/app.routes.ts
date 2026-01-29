@@ -15,7 +15,11 @@ export const routes: Routes = [
     loadComponent: () => import('./../pages/tools/tools').then(m => m.ToolsComponent)
   },
   {
+    path: 'analytics',
+    loadComponent: () => import('./../pages/analytics/analytics').then(m => m.AnalyticsComponent)
+  },
+  {
     path: '**',
     redirectTo: '/dashboard'
-  },
+  }
 ];

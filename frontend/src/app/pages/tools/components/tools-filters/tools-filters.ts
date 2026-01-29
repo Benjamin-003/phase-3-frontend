@@ -1,14 +1,7 @@
 import { Component, ChangeDetectionStrategy, output, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
-export interface FilterValues {
-  department: string;
-  status: string;
-  category: string;
-  minCost: number;
-  maxCost: number;
-}
+import { FilterValues } from '../../../../core/models/interfaces';
 
 @Component({
   selector: 'app-tools-filters',

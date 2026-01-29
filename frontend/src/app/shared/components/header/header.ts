@@ -1,13 +1,17 @@
+// ============================================
+// 🎯 Header Component - WITH ANALYTICS LINK
+// ============================================
+
 import { ChangeDetectionStrategy, Component, computed, inject, output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; 
-import { ThemeService } from '../../../core/services/themeService';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { ThemeService } from '../../../core/services/themeService';
 
 @Component({
- selector: 'app-header',
+  selector: 'app-header',
   standalone: true,
- imports: [CommonModule, FormsModule, RouterLink, RouterLinkActive],
+  imports: [CommonModule, FormsModule, RouterLink, RouterLinkActive],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './header.html',
   styles: [`

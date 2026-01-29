@@ -1,15 +1,11 @@
-// ============================================
-// 🔧 Tools Page Component - COMPLET JOUR 7
-// ============================================
-
 import { Component, ChangeDetectionStrategy, signal, computed, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../../shared/components/header/header';
 import { ToolsTableComponent } from '../../shared/components/tool-table/tool-table';
-import { ToolsFiltersComponent, FilterValues } from './components/tools-filters/tools-filters';
+import { ToolsFiltersComponent } from './components/tools-filters/tools-filters';
 import { ToolModalComponent } from './components/tool-modal/tool-modal';
 import { ApiService } from '../../core/services/apiService';
-import { Tool } from '../../core/models/interfaces';
+import { Tool,FilterValues } from '../../core/models/interfaces';
 
 @Component({
   selector: 'app-tools',

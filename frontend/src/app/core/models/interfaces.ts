@@ -90,3 +90,11 @@ export interface User {
   active: boolean;
   joined_at: string;
 }
+
+export interface FilterValues {
+  department: string;
+  status: string;
+  category: string;
+  minCost: number;
+  maxCost: number;
+}
