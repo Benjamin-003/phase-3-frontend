@@ -1,6 +1,6 @@
 # TechCorp Dashboard - SaaS Tools Management Platform
 
-A comprehensive three-day technical assessment project demonstrating a complete internal tools management system built with Angular 19, featuring real-time analytics, advanced filtering, CRUD operations, and a cohesive design system maintained across all pages without reference mockups.
+A comprehensive three-day technical assessment project demonstrating a complete internal tools management system built with Angular 21, featuring real-time analytics, advanced filtering, CRUD operations, and a cohesive design system maintained across all pages without reference mockups.
 
 ---
 
@@ -10,7 +10,7 @@ A comprehensive three-day technical assessment project demonstrating a complete 
 
 ```bash
 # Clone and install
-git clone <repository-url>
+git clone https://github.com/Benjamin-003/phase-3-frontend.git
 cd frontend
 npm install
 
@@ -73,7 +73,7 @@ src/app/
 
 ### Key Architectural Decisions
 
-**Signal-Based Reactivity**: All components use Angular 19's native Signals instead of RxJS BehaviorSubjects for local state management. This provides fine-grained reactivity with better performance than Zone.js change detection.
+**Signal-Based Reactivity**: All components use Angular 21's native Signals instead of RxJS BehaviorSubjects for local state management. This provides fine-grained reactivity with better performance than Zone.js change detection.
 
 **Standalone Components**: Zero NgModules - all components are standalone with explicit imports. This reduces bundle size and improves tree-shaking efficiency.
 
